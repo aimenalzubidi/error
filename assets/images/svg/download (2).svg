@@ -1,0 +1,9 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="128" cy="128" r="118" stroke="#4A4A4A" stroke-width="12"></circle>
+  <!-- موجات -->
+  <path d="M24 156c16 0 24-14 40-14s24 14 40 14 24-14 40-14 24 14 40 14 24-14 40-14" fill="none" stroke="#4A4A4A" stroke-width="10" stroke-linecap="round"></path>
+  <path d="M24 186c16 0 24-14 40-14s24 14 40 14 24-14 40-14 24 14 40 14 24-14 40-14" fill="none" stroke="#4A4A4A" stroke-width="10" stroke-linecap="round"></path>
+  <path d="M24 216c16 0 24-14 40-14s24 14 40 14 24-14 40-14 24 14 40 14 24-14 40-14" fill="none" stroke="#4A4A4A" stroke-width="10" stroke-linecap="round"></path>
+  <!-- قطرة ماء بسيطة -->
+  <path d="M128 52c-20 28-32 44-32 62a32 32 0 1 0 64 0c0-18-12-34-32-62z" fill="none" stroke="#4A4A4A" stroke-width="10" stroke-linejoin="round"></path>
+</svg>

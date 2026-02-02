@@ -27,7 +27,6 @@ class _ChatState extends State<Chat> {
     setState(() {
       messages.add(Message(text: userInput, isSentByUser: true));
       isLoading = true;
-      
     });
 
     try {
@@ -62,7 +61,7 @@ class _ChatState extends State<Chat> {
           await Future.delayed(Duration(milliseconds: 80));
           setState(() {
             messages[messages.length - 1] = Message(
-              text: messages.last.text + " " + word,
+              text: "${messages.last.text} $word",
               isSentByUser: false,
             );
           });
@@ -145,15 +144,13 @@ class _ChatState extends State<Chat> {
                       decoration: InputDecoration(
                         hintText: 'اكتب سؤالك هنا...',
                         hintStyle: const TextStyle(color: Color(0xFFb3de00)),
-                        border:  OutlineInputBorder(
+                        border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20.r)),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius:  BorderRadius.all(
-                            Radius.circular(20.r),
-                          ),
-                          borderSide:  BorderSide(
-                            color:const Color(0xFFb3de00),
+                          borderRadius: BorderRadius.all(Radius.circular(20.r)),
+                          borderSide: BorderSide(
+                            color: const Color(0xFFb3de00),
                             width: 1.w,
                           ),
                         ),
@@ -161,8 +158,8 @@ class _ChatState extends State<Chat> {
                           borderRadius: const BorderRadius.all(
                             Radius.circular(20),
                           ),
-                          borderSide:  BorderSide(
-                            color:const Color(0xFFb3de00),
+                          borderSide: BorderSide(
+                            color: const Color(0xFFb3de00),
                             width: 1.5.r,
                           ),
                         ),

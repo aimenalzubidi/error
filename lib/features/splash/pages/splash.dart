@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../auth/pages/sign_up.dart';
-import '../../main_app/home/pages/home_screen.dart';
 import '../../onboarding/pages/on_boarding.dart';
 
 class Splash extends StatefulWidget {

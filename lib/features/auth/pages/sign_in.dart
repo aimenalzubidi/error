@@ -3,11 +3,12 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:graduation_project/core/util/validator.dart';
 import 'package:graduation_project/features/auth/controller/sign_in_controller.dart';
+import 'package:graduation_project/features/main_app/home/pages/home_screen.dart';
+import 'package:graduation_project/sign_in_methodes/sign_in_google.dart';
 import 'package:remixicon/remixicon.dart';
 
 import 'package:graduation_project/core/shared/widgets/custom_textformfield.dart';
@@ -23,11 +24,12 @@ class _LoginScreenState extends State<SignIn> {
   GlobalKey<FormState> formState = GlobalKey();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
+  final GoogleAuthService _authService = GoogleAuthService();
   bool isShow = true;
   bool isObscure = true;
   bool isLoading = false;
   Set _selected = {"user"};
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -202,6 +204,7 @@ class _LoginScreenState extends State<SignIn> {
                     ),
 
                     SizedBox(height: 10.h),
+
                     SizedBox(
                       height: 60.h,
                       width: 370.w,
@@ -228,7 +231,18 @@ class _LoginScreenState extends State<SignIn> {
                           ),
                         ),
 
-                        onPressed: () {},
+                        onPressed: () async {
+                          User? user = await _authService.signInWithGoogle();
+                          // If sign-in is successful, navigate to the HomeScreen
+                          if (user != null) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => HomeScreen(user: user),
+                              ),
+                            );
+                          }
+                        },
                       ),
                     ),
 

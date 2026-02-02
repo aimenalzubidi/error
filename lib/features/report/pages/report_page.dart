@@ -2,13 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graduation_project/core/enums/enum.dart';
-import 'package:image_picker/image_picker.dart';
 
-import '../../../core/shared/widgets/custom_textformfield.dart';
-import '../widget/button_location_of_report.dart';
 import '../widget/button_of_ report_type.dart';
 import '../widget/pick_image.dart';
 

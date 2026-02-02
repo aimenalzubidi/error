@@ -9,7 +9,7 @@ import 'package:graduation_project/features/auth/pages/sign_up.dart';
 import 'package:graduation_project/features/main_app/home/pages/home_screen.dart';
 
 class SignupController extends GetxController {
-  AuthApiServices _servicess = AuthApiServices();
+  final AuthApiServices _servicess = AuthApiServices();
   String? phoneerror;
   String? passworderror;
 

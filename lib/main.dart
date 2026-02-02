@@ -2,20 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/route_manager.dart';
-import 'package:graduation_project/features/auth/pages/forget_password.dart';
-import 'package:graduation_project/features/auth/pages/otp.dart';
 import 'package:graduation_project/features/auth/pages/sign_in.dart';
 import 'package:graduation_project/features/auth/pages/sign_up.dart';
-import 'package:graduation_project/features/report/pages/report_page.dart';
 import 'package:graduation_project/firebase_options.dart';
-import 'features/emergency_contact/pages/add_emergency_contact.dart';
-import 'features/main_app/dashboard_page/dashboard_page.dart';
-import 'features/splash/pages/splash.dart';
-import 'features/auth/pages/forget_password.dart';
-import 'features/auth/pages/otp.dart';
-import 'features/auth/pages/sign_in.dart';
-import 'features/auth/pages/sign_up.dart';
-import 'features/main_app/danger_zones/pages/danger_zones.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,7 +54,7 @@ class MyApp extends StatelessWidget {
           routes: {},
           debugShowCheckedModeBanner: false,
 
-          home: SignUp(),
+          home: SignIn(),
         );
       },
     );

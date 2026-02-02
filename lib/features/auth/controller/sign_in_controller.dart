@@ -6,7 +6,7 @@ import 'package:graduation_project/features/auth/pages/SERVICES/auh_api_services
 import 'package:graduation_project/features/main_app/home/pages/home_screen.dart';
 
 class SignInController extends GetxController {
-  AuthApiServices _servicess = AuthApiServices();
+  final AuthApiServices _servicess = AuthApiServices();
   String? phoneerror;
   String? passworderror;
 

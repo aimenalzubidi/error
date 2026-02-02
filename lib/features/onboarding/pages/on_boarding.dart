@@ -3,8 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../auth/pages/sign_up.dart';
-
 class OnBoarding extends StatefulWidget {
   const OnBoarding({super.key});
   @override
@@ -168,8 +166,10 @@ class _OnboardingState extends State<OnBoarding> {
                           child: Text(
                             nextButton,
                             style: Theme.of(context).textTheme.bodySmall
-                                ?.copyWith(color: Colors.white,fontWeight: FontWeight.bold),
-                                
+                                ?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                           ),
                         ),
                       ),

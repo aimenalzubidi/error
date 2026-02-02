@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geofence_foreground_service/constants/geofence_event_type.dart';
-import 'package:geofence_foreground_service/models/notification_icon_data.dart';
-import 'package:geofence_foreground_service/models/zone.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:remixicon/remixicon.dart';
-import 'package:geofence_foreground_service/geofence_foreground_service.dart';
-import 'dart:developer';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:latlng/latlng.dart' as lat;
 
 class DangerZones extends StatefulWidget {
   const DangerZones({super.key});
@@ -19,11 +11,10 @@ class DangerZones extends StatefulWidget {
 }
 
 class _DangerZonesState extends State<DangerZones> {
-
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   GoogleMapController? _mapController;
   final List<Circle> _googleMapDangerZones = [];
-  final  List _dangerZones = [
+  final List _dangerZones = [
     {
       "zone name ": "لعوص",
       "latitude": 15.920834,
@@ -55,9 +46,7 @@ class _DangerZonesState extends State<DangerZones> {
       "radius": 300.5,
     },
   ];
- 
 
- 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,12 +69,12 @@ class _DangerZonesState extends State<DangerZones> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: _buildFloatingActionButton(),
       key: scaffoldKey,
-      body:buildMap()
+      body: buildMap(),
     );
   }
-  void _addDangerZonesToGoogleMap()
-  {
-    for (int i=0; i < _dangerZones.length; i++) {
+
+  void _addDangerZonesToGoogleMap() {
+    for (int i = 0; i < _dangerZones.length; i++) {
       _googleMapDangerZones.add(
         Circle(
           circleId: CircleId(_dangerZones[i]["zone name "]),
@@ -101,11 +90,13 @@ class _DangerZonesState extends State<DangerZones> {
       );
     }
   }
-   @override
+
+  @override
   void initState() {
     super.initState();
     _addDangerZonesToGoogleMap();
   }
+
   void _showDangerZones(GlobalKey<ScaffoldState> key) {
     {
       key.currentState!.showBottomSheet(
@@ -179,23 +170,24 @@ class _DangerZonesState extends State<DangerZones> {
       );
     }
   }
-  Widget _buildFloatingActionButton()
-{
-  return SizedBox(
-        height: 70.h,
-        width: 250.w,
-        child: ElevatedButton.icon(
-          label: Text(
-            "المناطق الخطرة",
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium!.copyWith(color: Colors.white),
-          ),
-          onPressed: () => _showDangerZones(scaffoldKey),
-          icon: Icon(RemixIcons.map_pin_2_fill, color: Colors.white),
+
+  Widget _buildFloatingActionButton() {
+    return SizedBox(
+      height: 70.h,
+      width: 250.w,
+      child: ElevatedButton.icon(
+        label: Text(
+          "المناطق الخطرة",
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium!.copyWith(color: Colors.white),
         ),
-      );
-}
+        onPressed: () => _showDangerZones(scaffoldKey),
+        icon: Icon(RemixIcons.map_pin_2_fill, color: Colors.white),
+      ),
+    );
+  }
+
   Widget buildMap() {
     return GoogleMap(
       initialCameraPosition: CameraPosition(
@@ -211,6 +203,4 @@ class _DangerZonesState extends State<DangerZones> {
       },
     );
   }
-
-
 }

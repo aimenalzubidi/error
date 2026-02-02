@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final User? user;
+  const HomeScreen({super.key, this.user});
 
   @override
   Widget build(BuildContext context) {

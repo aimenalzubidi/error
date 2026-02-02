@@ -5,9 +5,6 @@ import 'package:graduation_project/features/emergency_contact/widgets/list_conta
 import '../../../core/shared/widgets/custom_textformfield.dart';
 import '../../../core/util/dialogs.dart';
 import '../../../core/util/validator.dart';
-import 'package:remixicon/remixicon.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-
 
 class AddEmergencyContact extends StatefulWidget {
   const AddEmergencyContact({super.key});
@@ -17,15 +14,12 @@ class AddEmergencyContact extends StatefulWidget {
 }
 
 class _AddEmergencyContactState extends State<AddEmergencyContact> {
-  
-
   final TextEditingController _textController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController _contactController = TextEditingController();
 
   List<String> phoneNumbers = [];
   String textButton = "إضافة";
-  
 
   @override
   Widget build(BuildContext context) {
@@ -59,21 +53,20 @@ class _AddEmergencyContactState extends State<AddEmergencyContact> {
                 ).textTheme.bodySmall!.copyWith(color: Colors.black54),
                 textAlign: TextAlign.center,
               ),
-               SizedBox(height: 15.h),
+              SizedBox(height: 15.h),
               SizedBox(
                 height: 310.h,
                 child: Container(
-                 
                   decoration: BoxDecoration(
-                    border: BoxBorder.all(color: Color(0xFFb3de00),width: .7),
+                    border: BoxBorder.all(color: Color(0xFFb3de00), width: .7),
                     borderRadius: BorderRadius.circular(15.r),
                     color: Colors.white,
-                  ),  
+                  ),
                   child: _buildListViewContact(),
                 ),
               ),
-               
-               SizedBox(height: 20.h),
+
+              SizedBox(height: 20.h),
               _buildBottomRowButtons(),
             ],
           ),
@@ -81,7 +74,8 @@ class _AddEmergencyContactState extends State<AddEmergencyContact> {
       ),
     );
   }
-    @override
+
+  @override
   void initState() {
     super.initState();
   }
@@ -99,6 +93,7 @@ class _AddEmergencyContactState extends State<AddEmergencyContact> {
       }
     });
   }
+
   void _addContact(List<String> phoneNumbers, GlobalKey<FormState> key) {
     if (phoneNumbers.length < 3) {
       showDialog(
@@ -168,59 +163,57 @@ class _AddEmergencyContactState extends State<AddEmergencyContact> {
       }
     }
   }
-  Widget _buildListViewContact()
-  {
+
+  Widget _buildListViewContact() {
     return ListView.separated(
-                    separatorBuilder: (context, index) => Divider(color: Color( 0xFFb3de00),thickness: 1,endIndent: 10,indent: 10,),
-                    itemCount: phoneNumbers.length,
-                    itemBuilder: (context, index) => ListTileContact(
-                      deleteOnPressed: () => _deleteContact(index),
-                      contactNumber: phoneNumbers[index],
-                    ),
-                  );
-                
-  }
-  Widget _buildBottomRowButtons()
-  {
-    return  Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  SizedBox(
-                    height: 60.h,
-                    width: 130.w,
-
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        side: BorderSide(color: const Color(0xFFb3de00)),
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        "تخطي",
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 50.h),
-
-                  SizedBox(
-                    height: 60.h,
-                    width: 200.w,
-
-                    child: ElevatedButton(
-                      onPressed: () => _addContact(phoneNumbers, formKey),
-                      child: Text(
-                        textButton,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.bodyMedium!.copyWith(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ],
-
-              );
-
+      separatorBuilder: (context, index) => Divider(
+        color: Color(0xFFb3de00),
+        thickness: 1,
+        endIndent: 10,
+        indent: 10,
+      ),
+      itemCount: phoneNumbers.length,
+      itemBuilder: (context, index) => ListTileContact(
+        deleteOnPressed: () => _deleteContact(index),
+        contactNumber: phoneNumbers[index],
+      ),
+    );
   }
 
+  Widget _buildBottomRowButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        SizedBox(
+          height: 60.h,
+          width: 130.w,
+
+          child: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              backgroundColor: Colors.white,
+              side: BorderSide(color: const Color(0xFFb3de00)),
+            ),
+            onPressed: () {},
+            child: Text("تخطي", style: Theme.of(context).textTheme.titleMedium),
+          ),
+        ),
+        SizedBox(width: 50.h),
+
+        SizedBox(
+          height: 60.h,
+          width: 200.w,
+
+          child: ElevatedButton(
+            onPressed: () => _addContact(phoneNumbers, formKey),
+            child: Text(
+              textButton,
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium!.copyWith(color: Colors.white),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }

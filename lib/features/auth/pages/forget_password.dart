@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graduation_project/core/shared/widgets/custom_textformfield.dart';
-import 'package:graduation_project/features/auth/pages/sign_in.dart';
 import '../../../core/util/validator.dart';
 
 class ForgetPassword extends StatefulWidget {

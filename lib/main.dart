@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
           routes: {},
           debugShowCheckedModeBanner: false,
 
-          home: SignUp(),
+          home: SignIn(),
         );
       },
     );

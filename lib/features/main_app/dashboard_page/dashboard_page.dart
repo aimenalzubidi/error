@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:graduation_project/features/auth/pages/sign_in.dart';
+import 'package:graduation_project/features/main_app/home/pages/home_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:remixicon/remixicon.dart';
 import '../ai_chat/pages/ai_chat.dart';
@@ -24,10 +26,10 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
         tabs: [
           PersistentTabConfig(
-            screen: const Placeholder(),
+            screen: HomeScreen(),
             item: ItemConfig(
               inactiveIcon: Padding(
-                padding:  EdgeInsets.all(8.h),
+                padding: EdgeInsets.all(8.h),
                 child: Icon(
                   RemixIcons.home_2_fill,
                   color: Colors.black26,
@@ -37,7 +39,7 @@ class _DashboardPageState extends State<DashboardPage> {
               activeForegroundColor: const Color.fromARGB(255, 144, 180, 0),
               activeColorSecondary: const Color(0xFFb3de00),
               icon: Padding(
-                padding:  EdgeInsets.all(8.h),
+                padding: EdgeInsets.all(8.h),
                 child: Icon(
                   RemixIcons.home_2_fill,
                   color: const Color(0xFFb3de00),
@@ -45,15 +47,18 @@ class _DashboardPageState extends State<DashboardPage> {
                 ),
               ),
               title: "الصفحة الرئيسة",
-              textStyle: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w900),
+              textStyle: TextStyle(
+                fontSize: 10.sp,
+                fontWeight: FontWeight.w900,
+              ),
             ),
           ),
-         
+
           PersistentTabConfig(
             screen: Chat(),
             item: ItemConfig(
               inactiveIcon: Padding(
-                padding:  EdgeInsets.all(8.h),
+                padding: EdgeInsets.all(8.h),
                 child: Icon(
                   RemixIcons.chat_1_fill,
                   color: Colors.black26,
@@ -63,7 +68,7 @@ class _DashboardPageState extends State<DashboardPage> {
               activeForegroundColor: const Color.fromARGB(255, 150, 187, 0),
               activeColorSecondary: const Color(0xFFb3de00),
               icon: Padding(
-                padding:  EdgeInsets.all(8.h),
+                padding: EdgeInsets.all(8.h),
                 child: Icon(
                   RemixIcons.chat_1_fill,
                   color: const Color(0xFFb3de00),
@@ -71,16 +76,18 @@ class _DashboardPageState extends State<DashboardPage> {
                 ),
               ),
               title: "AI",
-              textStyle: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w900),
+              textStyle: TextStyle(
+                fontSize: 10.sp,
+                fontWeight: FontWeight.w900,
+              ),
             ),
           ),
-           PersistentTabConfig(
-            screen:DangerZones(),
+          PersistentTabConfig(
+            screen: DangerZones(),
             item: ItemConfig(
               inactiveIcon: Padding(
-               padding:  EdgeInsets.all(8.h),
+                padding: EdgeInsets.all(8.h),
                 child: Icon(
-                  
                   RemixIcons.map_pin_2_fill,
                   color: Colors.black26,
                   size: 30.r,
@@ -89,7 +96,7 @@ class _DashboardPageState extends State<DashboardPage> {
               activeForegroundColor: const Color.fromARGB(255, 150, 187, 0),
               activeColorSecondary: const Color(0xFFb3de00),
               icon: Padding(
-                padding:  EdgeInsets.all(8.h),
+                padding: EdgeInsets.all(8.h),
                 child: Icon(
                   RemixIcons.map_pin_2_fill,
                   color: const Color(0xFFb3de00),
@@ -97,14 +104,17 @@ class _DashboardPageState extends State<DashboardPage> {
                 ),
               ),
               title: "المناطق الخطرة",
-              textStyle: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w900),
+              textStyle: TextStyle(
+                fontSize: 10.sp,
+                fontWeight: FontWeight.w900,
+              ),
             ),
           ),
           PersistentTabConfig(
             screen: const Placeholder(),
             item: ItemConfig(
               inactiveIcon: Padding(
-                padding:  EdgeInsets.all(8.h),
+                padding: EdgeInsets.all(8.h),
                 child: Icon(
                   RemixIcons.megaphone_fill,
                   color: Colors.black26,
@@ -113,10 +123,9 @@ class _DashboardPageState extends State<DashboardPage> {
               ),
               activeForegroundColor: const Color.fromARGB(255, 150, 187, 0),
               activeColorSecondary: const Color(0xFFb3de00),
-      
+
               icon: Padding(
-      
-                padding:  EdgeInsets.all(8.h),
+                padding: EdgeInsets.all(8.h),
                 child: Icon(
                   RemixIcons.megaphone_fill,
                   color: const Color(0xFFb3de00),
@@ -124,15 +133,17 @@ class _DashboardPageState extends State<DashboardPage> {
                 ),
               ),
               title: "إبلاغ",
-              textStyle: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w900),
+              textStyle: TextStyle(
+                fontSize: 10.sp,
+                fontWeight: FontWeight.w900,
+              ),
             ),
           ),
           PersistentTabConfig(
             screen: const Placeholder(),
             item: ItemConfig(
-              
               inactiveIcon: Padding(
-                padding:  EdgeInsets.all(8.h),
+                padding: EdgeInsets.all(8.h),
                 child: Icon(
                   RemixIcons.notification_3_fill,
                   color: Colors.black26,
@@ -143,9 +154,9 @@ class _DashboardPageState extends State<DashboardPage> {
               activeColorSecondary: const Color(0xFFb3de00),
               inactiveBackgroundColor: Colors.black,
               inactiveForegroundColor: Colors.black38,
-      
+
               icon: Padding(
-                padding:  EdgeInsets.all(8.h),
+                padding: EdgeInsets.all(8.h),
                 child: Icon(
                   RemixIcons.notification_3_fill,
                   color: const Color(0xFFb3de00),
@@ -153,7 +164,10 @@ class _DashboardPageState extends State<DashboardPage> {
                 ),
               ),
               title: "الإشعارات",
-              textStyle: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w900),
+              textStyle: TextStyle(
+                fontSize: 10.sp,
+                fontWeight: FontWeight.w900,
+              ),
             ),
           ),
         ],
@@ -169,13 +183,11 @@ class _DashboardPageState extends State<DashboardPage> {
               topRight: Radius.circular(20.r),
               topLeft: Radius.circular(20.r),
             ),
-         
-         border: BoxBorder.all(color:  const Color(0xFFb3de00),width: 0.7.w)
-           
+
+            border: BoxBorder.all(color: const Color(0xFFb3de00), width: 0.7.w),
           ),
         ),
       ),
     );
   }
 }
-

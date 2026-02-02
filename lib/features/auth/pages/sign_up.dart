@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:graduation_project/core/shared/widgets/custom_textformfield.dart';
-import 'package:graduation_project/core/util/validator.dart';
-import 'package:graduation_project/features/auth/controller/sign_up_controller.dart';
+
+
+import 'package:get/get.dart';
+import 'package:graduation_project/features/auth/controllers/sign_up_controller.dart';
+import 'package:graduation_project/features/auth/pages/sign_in.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -14,119 +13,132 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  GlobalKey<FormState> formState = GlobalKey();
-  TextEditingController confirmPasswordController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController phonecontroller = TextEditingController();
+  late TextEditingController nameController;
+  late TextEditingController emailController;
+  late TextEditingController passswordController;
+
+  @override
+  void initState() {
+    nameController = TextEditingController();
+    emailController = TextEditingController();
+    passswordController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passswordController.dispose();
+    super.dispose();
+  }
 
   bool isShow = false;
   bool isObscure = true;
   bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GetBuilder<SignupController>(
-        init: SignupController(),
-
+      appBar: AppBar(),
+      body: GetBuilder<SignUpController>(
+        init: SignUpController(),
         builder: (controller) {
           return Container(
-            padding: EdgeInsets.only(
-              left: 20.w,
-              right: 20.w,
-              bottom: 20.h,
-              top: 150.h,
-            ),
+            padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 50),
             color: const Color(0xfff6f6f6),
-
             child: SingleChildScrollView(
-              child: Form(
-                key: formState,
-                child: Column(
-                  children: [
-                    Text(
-                      "إنشاء حساب جديد",
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    SizedBox(height: 40.h),
-                    CustomTextFormFeild(
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r'[a-zA-Z\u0600-\u06FF]'),
-                        ),
-                      ],
-                      textAlign: TextAlign.right,
-                      textDirection: TextDirection.rtl,
-                      labelAlignment: Alignment.centerRight,
-                      labelText: "الإسم الأول",
-                      maxLength: 30,
-                      width: 380.w,
-                      height: 100.h,
-                      prefix: Icon(
+              child: Column(
+                children: [
+                  const SizedBox(height: 16),
+
+                  Text(
+                    "إنشاء حساب جديد",
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: nameController,
+                   
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
                         Icons.person,
                         color: const Color(0xFFb3de00),
-                        size: 25.r,
+                        size: 25,
                       ),
-                      validator: (name) => Validator.nameUser(name),
-                      onChanged: (text) => formState.currentState!.validate(),
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.transparent),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: const Color(0xFFb3de00)),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      labelText: "الاسم",
+                      hintText: "Ahmed ",
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: const Color(0xFFb3de00)),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
-                    CustomTextFormFeild(
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r'[a-zA-Z\u0600-\u06FF]'),
-                        ),
-                      ],
-                      textAlign: TextAlign.right,
-                      textDirection: TextDirection.rtl,
-                      labelAlignment: Alignment.centerRight,
-                      labelText: "الإسم الأخير",
-                      maxLength: 30,
-                      width: 380.w,
-                      height: 100.h,
-                      prefix: Icon(
-                        Icons.person,
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: emailController,
+                    //  onChanged: (text) => formState.currentState!.validate(),
+                    decoration: InputDecoration(
+                      errorText: controller.emailError,
+                      prefixIcon: Icon(
+                        Icons.email,
+                        color: Color(0xFFb3de00),
+                        size: 25,
+                      ),
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.transparent),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: const Color(0xFFb3de00)),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      labelText: "البريد الإلكتروني",
+                      hintText: "example@gmail.com",
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: const Color(0xFFb3de00)),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  ),
+                  
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: passswordController,
+                    //  onChanged: (text) => formState.currentState!.validate(),
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.lock,
                         color: const Color(0xFFb3de00),
-                        size: 25.r,
+                        // size: 20,
                       ),
-                      validator: (name) => Validator.nameUser(name),
-                      onChanged: (text) => formState.currentState!.validate(),
-                    ),
-                    CustomTextFormFeild(
-                      controller: phonecontroller,
-
-                      textAlign: TextAlign.start,
-                      errortext: controller.phoneerror,
-                      width: 385.w,
-                      height: 100.h,
-                      maxLength: 9,
-                      labelText: "رقم الهاتف",
-                      keyboardType: TextInputType.number,
-                      prefix: Icon(
-                        Icons.phone_rounded,
-                        color: const Color(0xFFb3de00),
-                        size: 20.r,
+                      fillColor: Colors.white,
+                      errorText: controller.passwordError,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.transparent),
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      validator: (value) => Validator.mobileNo(value),
-                      onChanged: (text) => formState.currentState!.validate(),
-                    ),
-
-                    CustomTextFormFeild(
-                      controller: passwordController,
-                      textAlign: TextAlign.start,
-                      errortext: controller.passworderror,
-                      width: 385.w,
-                      height: 100.h,
-                      //   validator: (value) => Validator.password(value),
-                      obscureText: isObscure,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: const Color(0xFFb3de00)),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                       labelText: "كلمة المرور",
-                      maxLength: 8,
-                      keyboardType: TextInputType.text,
-                      prefix: Icon(
-                        Icons.lock,
-                        color: const Color(0xFFb3de00),
-                        size: 20.r,
+                      hintText: " example123 ",
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: const Color(0xFFb3de00)),
+                        borderRadius: BorderRadius.circular(20),
                       ),
-
-                      sufix: IconButton(
+                      suffix: IconButton(
                         onPressed: () {
                           setState(() {
                             isShow = !isShow;
@@ -136,108 +148,74 @@ class _SignUpState extends State<SignUp> {
                         icon: Icon(
                           isShow ? Icons.visibility : Icons.visibility_off,
                           color: const Color(0xFFb3de00),
-                          size: 20.r,
+                          // size: 20,
                         ),
                       ),
                     ),
-                    SizedBox(height: 10.h),
-                    CustomTextFormFeild(
-                      textAlign: TextAlign.start,
-                      width: 385.w,
-                      height: 100.h,
-                      controller: confirmPasswordController,
-                      validator: (confirmPassword) => Validator.confirmPassword(
-                        password: passwordController.text,
-                        confirmPassword: confirmPassword,
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    height: 60,
+                    width: 230,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFFb3de00),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
                       ),
-                      onChanged: (text) {
-                        formState.currentState!.validate();
+
+                      onPressed: () {
+                        setState(() {
+                          controller.createAccount(
+                            email: emailController.text.trim(),
+                            password: passswordController.text.trim(),
+                          );
+                        });
+                        emailController.clear();
+                        passswordController.clear();
+                        nameController.clear();
                       },
-                      obscureText: isObscure,
-                      labelText: "تأكيد كلمة المرور",
-                      maxLength: 8,
-                      keyboardType: TextInputType.text,
-                      prefix: Icon(
-                        Icons.lock,
-                        color: const Color(0xFFb3de00),
-                        size: 20.r,
-                      ),
-
-                      sufix: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            isShow = !isShow;
-                            isObscure = !isObscure;
-                          });
-                        },
-                        icon: Icon(
-                          isShow ? Icons.visibility : Icons.visibility_off,
-                          color: const Color(0xFFb3de00),
-                          size: 20.r,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20.h),
-
-                    SizedBox(
-                      height: 60.h,
-                      width: 230.w,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.r),
-                          ),
-                        ),
-
-                        onPressed: () {
-                          setState(() {
-                            controller.createaccount(
-                              phone: phonecontroller.text,
-                              password: passwordController.text,
-                            );
-                          });
-                        },
-                        child: isLoading
-                            ? SizedBox(
-                                height: 25.h,
-                                width: 25.w,
-                                child: const CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 3,
-                                ),
-                              )
-                            : Text(
-                                "إنشاء حساب",
-                                style: Theme.of(context).textTheme.bodyMedium!
-                                    .copyWith(color: Colors.white),
+                      child: isLoading
+                          ? SizedBox(
+                              height: 25,
+                              width: 25,
+                              child: const CircularProgressIndicator(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                strokeWidth: 3,
                               ),
+                            )
+                          : Text(
+                              "إنشاء حساب",
+                              style: Theme.of(context).textTheme.bodyMedium!
+                                  .copyWith(color: Colors.white),
+                            ),
+                    ),
+                  ),
+                 
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "لــدي حســاب ؟",
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodySmall!.copyWith(color: Colors.black54),
                       ),
-                    ),
-
-                    SizedBox(height: 30.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            //  Navigator.of(context).pushReplacementNamed("Login");
-                          },
-
-                          child: Text(
-                            "تسجيل الدخول ",
-                            style: Theme.of(context).textTheme.titleSmall!
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
+                      TextButton(
+                        onPressed: () {
+                          Get.to(() => SignIn());
+                        },
+                        child: Text(
+                          "تسجيل الدخول ",
+                          style: Theme.of(context).textTheme.titleSmall!
+                              .copyWith(fontWeight: FontWeight.bold),
                         ),
-                        Text(
-                          "لــدي حســاب ؟",
-                          style: Theme.of(context).textTheme.bodySmall!
-                              .copyWith(color: Colors.black54),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           );

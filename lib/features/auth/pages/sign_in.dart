@@ -1,33 +1,40 @@
-import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:graduation_project/core/util/validator.dart';
-import 'package:graduation_project/features/auth/controller/sign_in_controller.dart';
-import 'package:remixicon/remixicon.dart';
+import 'package:flutter_svg/svg.dart';
 
-import 'package:graduation_project/core/shared/widgets/custom_textformfield.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:get/get.dart';
+import 'package:graduation_project/features/auth/controllers/sign_in_controller.dart';
+import 'package:graduation_project/features/auth/pages/sign_up.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
+
   @override
-  State<SignIn> createState() => _LoginScreenState();
+  State<SignIn> createState() => _SignInState();
 }
 
-class _LoginScreenState extends State<SignIn> {
-  GlobalKey<FormState> formState = GlobalKey();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+class _SignInState extends State<SignIn> {
+  late TextEditingController emailController;
+  late TextEditingController passswordController;
 
-  bool isShow = true;
+  @override
+  void initState() {
+    emailController = TextEditingController();
+    passswordController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passswordController.dispose();
+    super.dispose();
+  }
+
+  bool isShow = false;
   bool isObscure = true;
   bool isLoading = false;
-  Set _selected = {"user"};
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,100 +42,70 @@ class _LoginScreenState extends State<SignIn> {
         init: SignInController(),
         builder: (controller) {
           return Container(
-            height: double.infinity,
-            width: double.infinity,
-            padding: EdgeInsets.fromLTRB(20.w, 70.h, 20.w, 2.h),
+            padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 150),
             color: const Color(0xfff6f6f6),
-
             child: SingleChildScrollView(
-              child: Form(
-                key: formState,
-                child: Column(
-                  children: [
-                    SvgPicture.asset(
-                      "assets/images/svg/login-1.svg",
-                      width: 210.w,
-                      height: 210.h,
-                    ),
-                    SizedBox(height: 30.h),
-                    Text(
-                      "تسجيل الدخول",
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    SizedBox(height: 15.h),
-
-                    SegmentedButton(
-                      selected: _selected,
-
-                      onSelectionChanged: (segmentSelected) {
-                        setState(() {
-                          _selected = segmentSelected;
-                          log("$segmentSelected");
-                        });
-                      },
-
-                      style: SegmentedButton.styleFrom(
-                        selectedBackgroundColor: const Color(0xFFb3de00),
-                        selectedForegroundColor: Colors.black,
-                        textStyle: Theme.of(
-                          context,
-                        ).textTheme.bodySmall!.copyWith(color: Colors.black54),
-                        side: BorderSide(color: const Color(0xFFb3de00)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                 SvgPicture.asset("assets/images/svg/logo-1.svg", width: 250),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: emailController,
+                    //  onChanged: (text) => formState.currentState!.validate(),
+                    decoration: InputDecoration(
+                      errorText: controller.emailError,
+                      prefixIcon: Icon(
+                        Icons.email,
+                        color: Color(0xFFb3de00),
+                        size: 25,
                       ),
-                      segments: <ButtonSegment>[
-                        ButtonSegment(value: "user", label: Text("مستخدم")),
-                        ButtonSegment(value: "admin", label: Text("أدمــــن")),
-                      ],
-                    ),
-
-                    SizedBox(height: 30.h),
-                    CustomTextFormFeild(
-                      errortext: controller.phoneerror,
-                      textAlign: TextAlign.start,
-                      width: 385.w,
-                      height: 100.h,
-
-                      controller: phoneController,
-                      labelText: "رقم الهاتف",
-                      keyboardType: TextInputType.number,
-                      prefix: Icon(
-                        Icons.phone_rounded,
-                        color: const Color(0xFFb3de00),
-                        size: 20.r,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.transparent),
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      maxLength: 9,
-                      validator: (value) => Validator.mobileNo(value),
-
-                      onChanged: (text) {
-                        formState.currentState!.validate();
-                      },
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: const Color(0xFFb3de00)),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      labelText: "البريد الإلكتروني",
+                      hintText: "example@gmail.com",
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: const Color(0xFFb3de00)),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
-
-                    SizedBox(height: 10.h),
-
-                    CustomTextFormFeild(
-                      errortext: controller.phoneerror,
-                      textAlign: TextAlign.start,
-                      width: 385.w,
-                      height: 100.h,
-                      controller: passwordController,
-
-                      obscureText: isObscure,
-                      labelText: "كلمة المرور",
-                      maxLength: 8,
-                      keyboardType: TextInputType.text,
-                      prefix: Icon(
+                  ),
+                 
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: passswordController,
+                    //  onChanged: (text) => formState.currentState!.validate(),
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
                         Icons.lock,
                         color: const Color(0xFFb3de00),
-                        size: 20.r,
+                        // size: 20,
                       ),
-                      validator: (value) => Validator.password(value),
-                      onChanged: (text) {
-                        formState.currentState!.validate();
-                      },
-
-                      sufix: IconButton(
+                      fillColor: Colors.white,
+                      errorText: controller.passwordError,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.transparent),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: const Color(0xFFb3de00)),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      labelText: "كلمة المرور",
+                      hintText: " example@123 ",
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: const Color(0xFFb3de00)),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      suffix: IconButton(
                         onPressed: () {
                           setState(() {
                             isShow = !isShow;
@@ -136,127 +113,112 @@ class _LoginScreenState extends State<SignIn> {
                           });
                         },
                         icon: Icon(
-                          isShow ? Icons.visibility_off : Icons.visibility,
+                          isShow ? Icons.visibility : Icons.visibility_off,
                           color: const Color(0xFFb3de00),
-                          size: 20.r,
+                          // size: 20,
                         ),
                       ),
                     ),
+                  ),
+                 
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    height: 60,
+                    width: 230,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFFb3de00),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
 
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          controller.signIn(
+                            email: emailController.text,
+                            password: passswordController.text,
+                          );
+                        });
+                        emailController.clear();
+                        passswordController.clear();
+                      },
+                      child: isLoading
+                          ? SizedBox(
+                              height: 25,
+                              width: 25,
+                              child: const CircularProgressIndicator(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                strokeWidth: 3,
+                              ),
+                            )
+                          : Text(
+                              "إنشاء حساب",
+                              style: Theme.of(context).textTheme.bodyMedium!
+                                  .copyWith(color: Colors.white),
+                            ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "أو",
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  SizedBox(height: 10),
+                  SizedBox(
+                    height: 60,
+                    width: 370,
+                    child: OutlinedButton.icon(
+                      label: Text(
+                        "تسجيل الدخول بإستخدام حساب قوقل",
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Colors.black54,
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      icon: Icon(
+                        Icons.g_mobiledata,
+                        color: const Color(0xFFb3de00),
+                        size: 35,
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        side: BorderSide(
+                          color: const Color(0xFFb3de00),
+                          width: .7,
+                        ),
+                      ),
+
+                      onPressed: () {},
+                    ),
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "ليس لديك حساب ؟",
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodySmall?.copyWith(color: Colors.black54),
+                      ),
+                      TextButton(
                         onPressed: () {
-                          // Navigator.of(
-                          //   context,
-                          // ).pushReplacementNamed("ForgetPassword");
+                          Get.to(() => SignUp());
                         },
                         child: Text(
-                          "نسيت كلمة المرور",
-                          style: Theme.of(context).textTheme.titleSmall,
+                          " إنشاء حساب ",
+                          style: Theme.of(context).textTheme.titleSmall
+                              ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                       ),
-                    ),
-
-                    SizedBox(
-                      height: 60.h,
-                      width: 230.w,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            controller.signIn(
-                              phone: phoneController.text,
-                              password: passwordController.text,
-                            );
-                            isLoading = true;
-                            Future.delayed(Duration(seconds: 3), () {
-                              // ignore: use_build_context_synchronously
-                              // Navigator.pushReplacementNamed(context, "OTP");
-                              // isLoading = false;
-                            });
-                          });
-                        },
-                        child: isLoading
-                            ? SizedBox(
-                                height: 25.h,
-                                width: 25.w,
-                                child: const CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 3,
-                                ),
-                              )
-                            : Text(
-                                "تسجيل الدخول",
-                                style: Theme.of(context).textTheme.bodyMedium
-                                    ?.copyWith(color: Colors.white),
-                              ),
-                      ),
-                    ),
-                    SizedBox(height: 10.h),
-
-                    Text(
-                      "أو",
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-
-                    SizedBox(height: 10.h),
-                    SizedBox(
-                      height: 60.h,
-                      width: 370.w,
-                      child: OutlinedButton.icon(
-                        label: Text(
-                          "تسجيل الدخول بإستخدام حساب قوقل",
-                          style: Theme.of(context).textTheme.bodySmall
-                              ?.copyWith(
-                                color: Colors.black54,
-                                fontSize: 14.sp,
-                              ),
-                          textAlign: TextAlign.center,
-                        ),
-                        icon: Icon(
-                          RemixIcons.google_fill,
-                          color: const Color(0xFFb3de00),
-                          size: 35.r,
-                        ),
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          side: BorderSide(
-                            color: const Color(0xFFb3de00),
-                            width: .7,
-                          ),
-                        ),
-
-                        onPressed: () {},
-                      ),
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            // Navigator.of(context).pushNamed("SignUp");
-                          },
-
-                          child: Text(
-                            " إنشاء حساب ",
-                            style: Theme.of(context).textTheme.titleSmall
-                                ?.copyWith(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Text(
-                          "ليس لديك حساب ؟",
-                          style: Theme.of(context).textTheme.bodySmall
-                              ?.copyWith(color: Colors.black54),
-                        ),
-                      ],
-                    ),
-
-                    SizedBox(height: 30.h),
-                  ],
-                ),
+                    ],
+                  ),
+                ],
               ),
             ),
           );

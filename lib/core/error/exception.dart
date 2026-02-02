@@ -1,7 +1,7 @@
-class Usernotfoundexception implements Exception {}
+class UserNotFoundException implements Exception {}
 
-class Wrongpasswordexception implements Exception {}
+class WrongPasswordException implements Exception {}
 
-class Weakpasswordexception implements Exception {}
+class WeakPasswordException implements Exception {}
 
-class Emaioalreadyusedexception implements Exception {}
+class EmailAlreadyUsedException implements Exception {}

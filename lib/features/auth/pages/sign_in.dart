@@ -1,15 +1,10 @@
 import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:graduation_project/core/util/validator.dart';
 import 'package:graduation_project/features/auth/controller/sign_in_controller.dart';
+import 'package:graduation_project/features/auth/pages/forget_password.dart';
 import 'package:remixicon/remixicon.dart';
-
 import 'package:graduation_project/core/shared/widgets/custom_textformfield.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -21,8 +16,22 @@ class SignIn extends StatefulWidget {
 
 class _LoginScreenState extends State<SignIn> {
   GlobalKey<FormState> formState = GlobalKey();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+
+  @override
+  void initState() {
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   bool isShow = true;
   bool isObscure = true;
@@ -83,32 +92,25 @@ class _LoginScreenState extends State<SignIn> {
 
                     SizedBox(height: 30.h),
                     CustomTextFormFeild(
-                      errortext: controller.phoneerror,
+                      errortext: controller.emailError,
                       textAlign: TextAlign.start,
                       width: 385.w,
                       height: 100.h,
 
-                      controller: phoneController,
-                      labelText: "رقم الهاتف",
-                      keyboardType: TextInputType.number,
+                      controller: emailController,
+                      labelText: "البريد الإلكتروني",
+                      keyboardType: TextInputType.emailAddress,
                       prefix: Icon(
-                        Icons.phone_rounded,
+                        Icons.email_outlined,
                         color: const Color(0xFFb3de00),
                         size: 20.r,
                       ),
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      maxLength: 9,
-                      validator: (value) => Validator.mobileNo(value),
-
-                      onChanged: (text) {
-                        formState.currentState!.validate();
-                      },
                     ),
 
                     SizedBox(height: 10.h),
 
                     CustomTextFormFeild(
-                      errortext: controller.phoneerror,
+                      errortext: controller.passwordError,
                       textAlign: TextAlign.start,
                       width: 385.w,
                       height: 100.h,
@@ -116,18 +118,18 @@ class _LoginScreenState extends State<SignIn> {
 
                       obscureText: isObscure,
                       labelText: "كلمة المرور",
-                      maxLength: 8,
+                      // maxLength: 8,
                       keyboardType: TextInputType.text,
                       prefix: Icon(
                         Icons.lock,
                         color: const Color(0xFFb3de00),
                         size: 20.r,
                       ),
-                      validator: (value) => Validator.password(value),
-                      onChanged: (text) {
-                        formState.currentState!.validate();
-                      },
 
+                      // validator: (value) => Validator.password(value),
+                      // onChanged: (text) {
+                      //   formState.currentState!.validate();
+                      // },
                       sufix: IconButton(
                         onPressed: () {
                           setState(() {
@@ -147,9 +149,12 @@ class _LoginScreenState extends State<SignIn> {
                       alignment: Alignment.centerLeft,
                       child: TextButton(
                         onPressed: () {
-                          // Navigator.of(
-                          //   context,
-                          // ).pushReplacementNamed("ForgetPassword");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ForgetPassword(),
+                            ),
+                          );
                         },
                         child: Text(
                           "نسيت كلمة المرور",
@@ -163,18 +168,10 @@ class _LoginScreenState extends State<SignIn> {
                       width: 230.w,
                       child: ElevatedButton(
                         onPressed: () {
-                          setState(() {
-                            controller.signIn(
-                              phone: phoneController.text,
-                              password: passwordController.text,
-                            );
-                            isLoading = true;
-                            Future.delayed(Duration(seconds: 3), () {
-                              // ignore: use_build_context_synchronously
-                              // Navigator.pushReplacementNamed(context, "OTP");
-                              // isLoading = false;
-                            });
-                          });
+                          controller.signIn(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          );
                         },
                         child: isLoading
                             ? SizedBox(

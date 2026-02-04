@@ -1,48 +1,63 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:graduation_project/core/error/exception.dart';
 
-class AuthApiServices {
-  Future<bool> signin({required String phone, required String password}) async {
+class AuthApiSecvicess {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> signIn({required String email, required String password}) async {
     try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: phone,
-        password: password,
+      final credential = await _auth.signInWithEmailAndPassword(
+        email: email.trim(),
+        password: password.trim(),
       );
-      return true;
+
+      if (credential.user == null) {
+        throw Exception("تسجيل الدخول فشل");
+      }
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        throw Usernotfoundexception();
-      } else if (e.code == 'wrong-password') {
-        throw Wrongpasswordexception();
+      print(" FirebaseAuth LOGIN error: ${e.code}");
+
+      switch (e.code) {
+        case 'لا يوجد مستخدم بهذا البريد الإلكتروني':
+          throw UserNotFoundException();
+        case 'كلمة المرور غير صحيحة':
+          throw WrongPasswordException();
+        case 'ال بريد الإلكتروني غير صالح':
+          throw InvalidEmailException();
+        case 'غير صالح-بيانات الاعتماد':
+          throw WrongPasswordException();
+        default:
+          throw Exception(e.message);
       }
     }
-    return true;
   }
 
-  Future<bool> createacount({
-    required String phone,
+  Future<void> createAccount({
+    required String email,
     required String password,
   }) async {
     try {
-      final credential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: phone, password: password);
-      return true;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        throw Weakpasswordexception();
-      } else if (e.code == 'email-already-in-use') {
-        throw Emaioalreadyusedexception();
-      }
-    } catch (e) {
-      throw Exception(e);
-    }
-    return true;
-  }
+      final credential = await _auth.createUserWithEmailAndPassword(
+        email: email.trim(),
+        password: password.trim(),
+      );
 
-  Future<bool> getuserinfo() async {
-    return FirebaseAuth.instance.currentUser?.uid != null;
+      if (credential.user == null) {
+        throw Exception("إنشاء الحساب فشل");
+      }
+    } on FirebaseAuthException catch (e) {
+      print(" FirebaseAuth SIGNUP error: ${e.code}");
+
+      switch (e.code) {
+        case 'الايميل-مستخدم-مسبقًا':
+          throw EmailAlreadyUsedException();
+        case 'كلمة-المرور-ضعيفة':
+          throw WeakPasswordException();
+        case 'الايميل-غير-صالح':
+          throw InvalidEmailException();
+        default:
+          throw Exception(e.message);
+      }
+    }
   }
 }

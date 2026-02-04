@@ -43,17 +43,29 @@ class AuthApiSecvicess {
       );
 
       if (credential.user == null) {
+<<<<<<< HEAD
         throw Exception("إنشاء الحساب فشل");
+=======
+        throw Exception("Account creation failed");
+>>>>>>> 2f4861224d62f04300985e8b3d7d685ffc1af035
       }
     } on FirebaseAuthException catch (e) {
       print(" FirebaseAuth SIGNUP error: ${e.code}");
 
       switch (e.code) {
+<<<<<<< HEAD
         case 'الايميل-مستخدم-مسبقًا':
           throw EmailAlreadyUsedException();
         case 'كلمة-المرور-ضعيفة':
           throw WeakPasswordException();
         case 'الايميل-غير-صالح':
+=======
+        case 'email-already-in-use':
+          throw EmailAlreadyUsedException();
+        case 'weak-password':
+          throw WeakPasswordException();
+        case 'invalid-email':
+>>>>>>> 2f4861224d62f04300985e8b3d7d685ffc1af035
           throw InvalidEmailException();
         default:
           throw Exception(e.message);
